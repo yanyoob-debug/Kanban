@@ -1,0 +1,35 @@
+name: kanban
+
+services:
+  app:
+    build: .
+    ports:
+      - "127.0.0.1:${KANBAN_PORT:-8080}:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: mysql
+      DB_URL: jdbc:mysql://db:3306/kanban?allowPublicKeyRetrieval=true&useSSL=false
+      DB_USER: kanban
+      DB_PASSWORD: ${KANBAN_DB_PASSWORD:-kanban_local_dev}
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: kanban
+      MYSQL_USER: kanban
+      MYSQL_PASSWORD: ${KANBAN_DB_PASSWORD:-kanban_local_dev}
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+    volumes:
+      - kanban_data:/var/lib/mysql
+      - ./database/01_schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "--silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+
+volumes:
+  kanban_data:

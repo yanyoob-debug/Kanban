@@ -1,0 +1,12 @@
+.git
+.m2
+.mvn
+.vscode
+.idea
+target
+data
+.env
+.env.*
+*.log
+scripts
+README.md

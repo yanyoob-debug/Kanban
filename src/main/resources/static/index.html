@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="pt-BR">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#7662c4"><title>Kanban — Meu espaço de trabalho</title><link rel="stylesheet" href="styles.css?v=column-colors-5"><script src="app.js?v=history-error-6" type="module"></script></head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="/" aria-label="Kanban início"><span class="brand-icon">▥</span>kanban<span class="brand-dot">.</span></a>
+    <div class="workspace"><span class="workspace-avatar">Y</span><div><strong>Meu espaço</strong><small>Workspace pessoal</small></div></div>
+    <button class="primary sidebar-create" data-create>＋ Nova tarefa</button>
+    <nav aria-label="Navegação"><button class="nav-item active" id="all-view"><span>▦</span> Meu quadro</button><button class="nav-item" id="due-view"><span>◷</span> Com prazo</button><button class="nav-item" id="history-view"><span>◴</span> Histórico</button></nav>
+    <div class="sidebar-label">MEUS QUADROS <span>01</span></div>
+    <div class="board-link"><span class="mini-icon">▤</span> Projeto Kanban <span class="small-dot"></span></div>
+
+    <div class="profile"><span class="workspace-avatar lilac">Y</span><div><strong>Meu portfólio</strong><small>Workspace pessoal</small></div></div>
+  </aside>
+  <main>
+    <header class="topbar"><div><span class="breadcrumb">Meu espaço</span><span class="separator">/</span><strong>Projeto Kanban</strong></div><span class="topbar-label"><span class="avatar">Y</span></span></header>
+    <section class="page-heading"><div><h1>Projeto Kanban <span class="title-star">☆</span></h1></div><button class="primary" data-create>＋ Nova tarefa</button></section>
+    <section class="toolbar" aria-label="Filtros"><div class="tab"><span>▦</span> Quadro <span class="tab-count" id="total">0</span></div><div class="filters"><label class="search"><span>⌕</span><input id="search" type="search" placeholder="Buscar tarefa..." aria-label="Buscar tarefa"></label><select id="priority-filter" aria-label="Filtrar prioridade"><option value="">Todas as prioridades</option><option value="ALTA">Alta prioridade</option><option value="MEDIA">Média prioridade</option><option value="BAIXA">Baixa prioridade</option></select></div></section>
+    <div id="connection-error" class="connection-error" hidden>Não foi possível carregar suas tarefas. <button id="retry">Tentar novamente</button></div>
+    <section class="board" aria-label="Quadro de tarefas">
+      <section class="column" data-status="A_FAZER"><header class="column-heading"><h2><i class="status-dot todo"></i>A Fazer <span class="count">0</span></h2><button data-create="A_FAZER" aria-label="Criar tarefa em A Fazer">＋</button></header><div class="cards"></div><button class="add-card" data-create="A_FAZER">＋ Adicionar tarefa</button></section>
+      <section class="column" data-status="EM_ANDAMENTO"><header class="column-heading"><h2><i class="status-dot doing"></i>Em Andamento <span class="count">0</span></h2><button data-create="EM_ANDAMENTO" aria-label="Criar tarefa em Em Andamento">＋</button></header><div class="cards"></div><button class="add-card" data-create="EM_ANDAMENTO">＋ Adicionar tarefa</button></section>
+      <section class="column" data-status="CONCLUIDO"><header class="column-heading"><h2><i class="status-dot done"></i>Concluído <span class="count">0</span></h2><button data-create="CONCLUIDO" aria-label="Criar tarefa em Concluído">＋</button></header><div class="cards"></div><button class="add-card" data-create="CONCLUIDO">＋ Adicionar tarefa</button></section>
+    </section>
+    <footer class="board-footer"><span>↔ Arraste os cartões para mudar de etapa</span><span id="progress">0 tarefas concluídas</span></footer>
+  </main>
+  <dialog id="task-dialog"><form id="task-form"><div class="modal-heading"><div><h2 id="dialog-title">Nova tarefa</h2></div><button type="button" class="close" id="close-dialog" aria-label="Fechar">×</button></div><label>Título<input name="titulo" required maxlength="120" placeholder="Título da tarefa"></label><label>Descrição<textarea name="descricao" maxlength="2000" rows="4" placeholder="Adicione detalhes sobre a tarefa..."></textarea></label><div class="form-row"><label>Etapa<select name="status"><option value="A_FAZER">A Fazer</option><option value="EM_ANDAMENTO">Em Andamento</option><option value="CONCLUIDO">Concluído</option></select></label><label>Prioridade<select name="prioridade"><option value="BAIXA">Baixa</option><option value="MEDIA" selected>Média</option><option value="ALTA">Alta</option></select></label></div><div class="deadline-field"><label for="deadline">Prazo <span class="optional">(opcional)</span></label><div class="deadline-controls"><input id="deadline" name="prazo" type="text" inputmode="numeric" maxlength="10" placeholder="DD/MM/AAAA" autocomplete="off"><button type="button" id="pick-deadline" aria-label="Escolher prazo no calendário">▦</button><button type="button" id="clear-deadline" aria-label="Limpar prazo">×</button></div><input id="deadline-picker" type="date" tabindex="-1" aria-label="Calendário do prazo" class="native-date-picker"></div><p id="form-error" class="form-error" role="alert"></p><div class="modal-actions"><button type="button" id="delete-task" class="delete" hidden>Excluir tarefa</button><button type="button" id="task-history" class="history-button" hidden>Histórico</button><button type="submit" class="primary" id="save-task">Criar tarefa</button></div></form></dialog>
+  <dialog id="history-dialog" class="history-dialog"><div class="modal-heading"><h2 id="history-title">Histórico de alterações</h2><button type="button" class="close" id="close-history" aria-label="Fechar histórico">×</button></div><p class="history-caption">Últimos 100 registros. Alterações feitas pela aplicação.</p><div id="history-list" aria-live="polite"></div></dialog>
+  <div class="toast" id="toast" role="status" hidden></div>
+</body>
+</html>
+
+
+
+
+
+
+
